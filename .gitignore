@@ -1,0 +1,12 @@
+*.idea
+*.log
+Thumbs.db
+.DS_Store
+*-sublime-*
+*.swp
+.swp
+config/*
+vendor/*
+Connexion.php
+composer.phar
+composer.lock
