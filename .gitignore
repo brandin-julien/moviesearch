@@ -5,8 +5,7 @@ Thumbs.db
 *-sublime-*
 *.swp
 .swp
-config/*
+dbconfig.php
 vendor/*
-Connexion.php
 composer.phar
 composer.lock
