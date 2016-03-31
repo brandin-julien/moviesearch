@@ -14,21 +14,18 @@ class IndexController
     public function searchAction()
     {
         //se connecter à la bdd
-        //header('Content-Type: application/json');
+        header('Content-Type: application/json');
 
         $conn = \MovieSearch\Connexion::getInstance();
-
-        //creer la requete  adéquate
-        /*
-        dans AJAX mettre chaque valeur envoyer dans une variable puis l'enregistrer dans une variable PHP pour faire nos requete vis a vis de ça
-        utiliser unserialize() de data puis json_encode;
-        */
 
         $title = '%';
         $duration1 = 0;
         $duration2 = 999999;
         $year1 = 0;
         $year2 = 9999;
+		$gender = '%';
+		$firstName = '%';
+		$lastName = '%';
 
         if($_POST) {
 
@@ -56,16 +53,27 @@ class IndexController
                 }
 
             }
+			
+			 if ($_POST['gender'] && $_POST['gender'] != 'Tous') {
+                $gender = $_POST['gender'];
+            }
+			
+			if ($_POST['first_name']) {
+                $firstName = $_POST['first_name'] . '%';
+            }
+			
+			if ($_POST['last_name']) {
+                $lastName = $_POST['last_name'] . '%';
+            }
 
         }
 
-        //$_POST['title'];
-        //$_POST['duration']; // envoi faudra en fonction de la phrase traduire en seconde
-        //$_POST['year_start'];
-        //$_POST['year_end'];
-
-        $sql = "SELECT * FROM `film` WHERE title LIKE :title and duration between :duration1 and :duration2 and year between :year1 and :year2";
-
+        $sql = "SELECT * FROM `artist` 
+		left join film_director on artist.id = film_director.artist_id 
+		left join film on film_director.film_id = film.id 
+		WHERE film.title LIKE :title and film.duration between :duration1 and :duration2 and film.year between :year1 and :year2
+		and artist.gender like :gender and artist.first_name like :firstName and artist.last_name like :lastName";
+		
         //envoyer la requete à la BDD
         $stmt = $conn->prepare($sql);
         $stmt->bindParam("title", $title);
@@ -73,10 +81,19 @@ class IndexController
         $stmt->bindParam("duration2", $duration2);
         $stmt->bindParam("year1", $year1);
         $stmt->bindParam("year2", $year2);
+        $stmt->bindParam("gender", $gender);
+        $stmt->bindParam("firstName", $firstName);
+        $stmt->bindParam("lastName", $lastName);
         $stmt->execute();
         //renvoyer les files qu'on a trouvés
         $films = $stmt->fetchAll();
 
-        return json_encode(["films" => $films]);
-    }
+		
+		if(sizeof($films) == 0){
+			http_response_code(400);
+			//return json_encode(["films" => $films]);
+		}else{
+			return json_encode(["films" => $films]);
+		}
+	}
 }

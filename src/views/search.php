@@ -53,7 +53,35 @@
                         <input name="year_end" type="text" class="form-control" id="titleInput" placeholder="fin">
                     </div>
                 </div>
-                <div class="form-group">
+				
+				  <div class="form-group">
+                    <label for="genderInput" class="col-sm-2 control-label">Genre du réalisateur</label>
+                    <div class="col-sm-10">
+                        <select name="gender" class="form-control" id="titleInput">
+                            <option>Tous</option>
+                            <option value="M">Homme</option>
+                            <option value="F">Femme</option>
+                        </select>
+                    </div>
+                </div>
+                
+				<div class="form-group">
+                    <label class="col-sm-2 control-label">Nom/Prénom</label>
+                    <div class="col-sm-1">
+                        
+                    </div>
+                    <div class="col-sm-4">
+                        <input name="last_name" type="text" class="form-control" id="titleInput" placeholder="Nom">
+                    </div>
+                    <div class="col-sm-1">
+                        
+                    </div>
+                    <div class="col-sm-4">
+                        <input name="first_name" type="text" class="form-control" id="titleInput" placeholder="Prénom">
+                    </div>
+                </div>
+				
+				<div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-default">Chercher</button>
                     </div>
@@ -77,6 +105,12 @@
             </th>
             <th>
                 Durée
+            </th>
+			<th>
+                Genre
+            </th>
+			<th>
+                Réalisateur
             </th>
         </tr>
         <tr id="displayFilms">
