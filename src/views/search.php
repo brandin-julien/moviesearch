@@ -66,18 +66,10 @@
                 </div>
                 
 				<div class="form-group">
-                    <label class="col-sm-2 control-label">Nom/Prénom</label>
-                    <div class="col-sm-1">
-                        
-                    </div>
-                    <div class="col-sm-4">
-                        <input name="last_name" type="text" class="form-control" id="titleInput" placeholder="Nom">
-                    </div>
-                    <div class="col-sm-1">
-                        
-                    </div>
-                    <div class="col-sm-4">
-                        <input name="first_name" type="text" class="form-control" id="titleInput" placeholder="Prénom">
+                    <label for="directorInput" class="col-sm-2 control-label">Nom/Prénom du réalisateur</label>
+                    <div class="col-sm-10">
+                        <input name="director" type="text" class="form-control" id="titleInput"
+                               placeholder="Nom/Prénom">
                     </div>
                 </div>
 				

@@ -24,13 +24,12 @@ class IndexController
         $year1 = 0;
         $year2 = 9999;
 		$gender = '%';
-		$firstName = '%';
-		$lastName = '%';
+		$director = '%';
 
         if($_POST) {
 
             if ($_POST['title']) {
-                $title = $_POST['title'] . '%';
+                $title = '%' . $_POST['title'] . '%';
             }
 
             if ($_POST['year_start'] && $_POST['year_end']) {
@@ -58,12 +57,8 @@ class IndexController
                 $gender = $_POST['gender'];
             }
 			
-			if ($_POST['first_name']) {
-                $firstName = $_POST['first_name'] . '%';
-            }
-			
-			if ($_POST['last_name']) {
-                $lastName = $_POST['last_name'] . '%';
+			if ($_POST['director']) {
+                $director = '%' . $_POST['director'] . '%';
             }
 
         }
@@ -72,7 +67,7 @@ class IndexController
 		left join film_director on artist.id = film_director.artist_id 
 		left join film on film_director.film_id = film.id 
 		WHERE film.title LIKE :title and film.duration between :duration1 and :duration2 and film.year between :year1 and :year2
-		and artist.gender like :gender and artist.first_name like :firstName and artist.last_name like :lastName";
+		and artist.gender like :gender and (artist.first_name like :director or artist.last_name like :director)";
 		
         //envoyer la requete à la BDD
         $stmt = $conn->prepare($sql);
@@ -82,8 +77,7 @@ class IndexController
         $stmt->bindParam("year1", $year1);
         $stmt->bindParam("year2", $year2);
         $stmt->bindParam("gender", $gender);
-        $stmt->bindParam("firstName", $firstName);
-        $stmt->bindParam("lastName", $lastName);
+        $stmt->bindParam("director", $director);
         $stmt->execute();
         //renvoyer les files qu'on a trouvés
         $films = $stmt->fetchAll();
