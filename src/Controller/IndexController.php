@@ -67,7 +67,7 @@ class IndexController
 		left join film_director on artist.id = film_director.artist_id 
 		left join film on film_director.film_id = film.id 
 		WHERE film.title LIKE :title and film.duration between :duration1 and :duration2 and film.year between :year1 and :year2
-		and artist.gender like :gender and (artist.first_name like :director or artist.last_name like :director)";
+		and artist.gender like :gender and (artist.first_name like :director or artist.last_name like :director) GROUP BY film.title";
 		
         //envoyer la requete à la BDD
         $stmt = $conn->prepare($sql);
